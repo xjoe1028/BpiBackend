@@ -1,0 +1,51 @@
+# server
+server:
+  port: 9999
+
+# spring
+spring:
+  datasource:
+    # h2 database
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    initialize: true
+    sql-script-ecoding: UTF-8
+    
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  h2:
+    console:
+      enabled: true
+
+  thymeleaf:
+    cache: false
+    prefix: "classpath:/templates/app/"
+    suffix: .html
+
+  web:
+    resources:
+      static-locations:
+        - classpath:/static/
+  
+  jackson:
+    default-property-inclusion: non-null # JSON處理時忽略非空字段
+    serialization:
+      fail-on-empty-beans: false
+
+# slf4j      
+logging:
+  file: bpiRestFulApi.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  level:
+    org.springframework: INFO
+    com.bpi: DEBUG
+
+
