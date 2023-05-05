@@ -176,10 +176,9 @@ public class BpiService {
 		List<BpiEntity> allBpis = Optional.ofNullable(bpiRepository.findAll()).orElseGet(ArrayList::new);
 		
 		Map<String, NewBpi> bpisMap = coindesk.getBpi().values().stream().map(b -> {
-			Optional<BpiEntity> matchBpi = allBpis.stream()
+			String codeChineseName = allBpis.stream()
 				.filter(ab -> StringUtils.equals(ab.getCode(), b.getCode()))
-				.findFirst();
-			String codeChineseName = matchBpi.isPresent() ? matchBpi.get().getCodeChineseName() : "";
+				.findFirst().map(BpiEntity::getCodeChineseName).orElse("");
 			return NewBpi.builder()
 				.code(b.getCode())
 				.codeChineseName(codeChineseName)
