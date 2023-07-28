@@ -1,15 +1,16 @@
 package com.bpi.model.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class NewBpi {
 	
 	@Schema(description = "貨幣名稱")
