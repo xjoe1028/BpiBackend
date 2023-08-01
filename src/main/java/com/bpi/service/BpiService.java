@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.bpi.cconstant.ErrorCode;
 import com.bpi.model.assembler.BpiAssembler;
+import com.bpi.model.dto.CoindeskBpiDTO;
 import com.bpi.model.dto.NewBpi;
 import com.bpi.model.entity.BpiEntity;
 import com.bpi.model.rq.BpiRq;
@@ -173,24 +174,28 @@ public class BpiService {
 		Coindesk coindesk = JsonUtils.getObject(jsonStr, Coindesk.class);
 		log.info("coindesk: {}", coindesk);
 
-		List<BpiEntity> allBpis = Optional.ofNullable(bpiRepository.findAll()).orElseGet(ArrayList::new);
+		List<BpiEntity> allBpis = Optional.of(bpiRepository.findAll()).orElseGet(ArrayList::new);
 		
-		Map<String, NewBpi> bpisMap = coindesk.getBpi().values().stream().map(b -> {
-			String codeChineseName = allBpis.stream()
-				.filter(ab -> StringUtils.equals(ab.getCode(), b.getCode()))
-				.findFirst().map(BpiEntity::getCodeChineseName).orElse("");
-			return NewBpi.builder()
-				.code(b.getCode())
-				.codeChineseName(codeChineseName)
-				.rate(b.getRate())
-				.build();
-		}).collect(Collectors.toMap(NewBpi::getCode, Function.identity(), (v1, v2) -> v2));
+		Map<String, NewBpi> bpisMap = coindesk.getBpi().values().stream()
+			.map(b -> transformNewBpi(allBpis, b))
+			.collect(Collectors.toMap(NewBpi::getCode, Function.identity(), (v1, v2) -> v2));
 		
 		log.info("bpiMap: {}", bpisMap);
 		
 		return NewBpiRs.builder()
 			.bpisData(bpisMap)
 			.updated(DateUtil.updatedFormat(coindesk.getTime().getUpdatedISO().substring(0,19)))
+			.build();
+	}
+	
+	private NewBpi transformNewBpi(List<BpiEntity> allBpis, CoindeskBpiDTO cbDto) {
+		String codeChineseName = allBpis.stream()
+			.filter(ab -> StringUtils.equals(ab.getCode(), cbDto.getCode()))
+			.findFirst().map(BpiEntity::getCodeChineseName).orElse("");
+		return NewBpi.builder()
+			.code(cbDto.getCode())
+			.codeChineseName(codeChineseName)
+			.rate(cbDto.getRate())
 			.build();
 	}
 	
