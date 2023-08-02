@@ -108,13 +108,13 @@ class BpiTest {
 	@Test
 	void findAllBpisTest() throws Exception {
 		MockHttpServletResponse mockRes = this.mockMvc.perform(
-			get(URL + "/findAllBpis")
-			.contentType(MediaType.APPLICATION_JSON_VALUE)
-			.accept(MediaType.APPLICATION_JSON_VALUE)
-		)
-		.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
-        .andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
-        .andReturn().getResponse(); // 將相應的資料轉換為字串
+				get(URL + "/findAllBpis")
+				.contentType(MediaType.APPLICATION_JSON_VALUE)
+				.accept(MediaType.APPLICATION_JSON_VALUE)
+			)
+			.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
+			.andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
+			.andReturn().getResponse(); // 將相應的資料轉換為字串
 		mockRes.setCharacterEncoding(CHARACTER_ENCODING); // 解决打印中文亂碼問題
 		String response = mockRes.getContentAsString();
 		log.info("response : {}", response);
@@ -129,14 +129,14 @@ class BpiTest {
 	@Test
 	void findBpiByCodeTest() throws Exception {
 		MockHttpServletResponse mockRes = this.mockMvc.perform(
-			get(URL + "/findBpi/code") // url
-			.contentType(MediaType.APPLICATION_JSON) // 資料的格式
-			.accept(MediaType.APPLICATION_JSON)
-			.param("code", "USD")
-		)
-		.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
-		.andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
-		.andReturn().getResponse();
+				get(URL + "/findBpi/code") // url
+				.contentType(MediaType.APPLICATION_JSON) // 資料的格式
+				.accept(MediaType.APPLICATION_JSON)
+				.param("code", "USD")
+			)
+			.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
+			.andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
+			.andReturn().getResponse();
 		mockRes.setCharacterEncoding(CHARACTER_ENCODING); // 解决打印中文亂碼問題
 		String response = mockRes.getContentAsString(); // 將相應的資料轉換為字串
 		log.info("response : {}", response);
@@ -151,13 +151,14 @@ class BpiTest {
 	@Test
 	void findBipByCodeChineseNameTest() throws Exception {
 		MockHttpServletResponse mockRes = this.mockMvc.perform(
-			get(URL + "/findBpi/codeChineseName") // url
-			.contentType(MediaType.APPLICATION_JSON) // 資料的格式
-			.param("codeChineseName", "人民幣")
-		)
-		.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
-	    .andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
-	    .andReturn().getResponse();
+				get(URL + "/findBpi/codeChineseName") // url
+				.contentType(MediaType.APPLICATION_JSON) // 資料的格式
+				.accept(MediaType.APPLICATION_JSON)
+				.param("codeChineseName", "人民幣")
+			)
+			.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
+			.andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
+			.andReturn().getResponse();
 		mockRes.setCharacterEncoding(CHARACTER_ENCODING); // 解决打印中文亂碼問題
 		String response = mockRes.getContentAsString(); // 將相應的資料轉換為字串
 		log.info("response : {}", response);
@@ -180,14 +181,14 @@ class BpiTest {
 			.build();
 		
 		MockHttpServletResponse mockRes = this.mockMvc.perform(
-			post(URL + "/addBpi") // url
-			.contentType(MediaType.APPLICATION_JSON) // 資料的格式
-			.accept(MediaType.APPLICATION_JSON)
-			.content(jsonMapper.writeValueAsString(rq))
-		)
-		.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
-	    .andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
-	    .andReturn().getResponse(); 
+				post(URL + "/addBpi") // url
+				.contentType(MediaType.APPLICATION_JSON) // 資料的格式
+				.accept(MediaType.APPLICATION_JSON)
+				.content(jsonMapper.writeValueAsString(rq))
+			)
+			.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
+			.andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
+			.andReturn().getResponse();
 		mockRes.setCharacterEncoding(CHARACTER_ENCODING); // 解决打印中文亂碼問題
 		String response = mockRes.getContentAsString(); // 將相應的資料轉換為字串
 		log.info("response : {}", response);
@@ -218,14 +219,14 @@ class BpiTest {
 		rq.setOldCode(bpi.getCode()); 
 		
 		MockHttpServletResponse mockRes = this.mockMvc.perform(
-			put(URL + "/updateBpi") // url
-			.contentType(MediaType.APPLICATION_JSON) // 資料的格式
-			.accept(MediaType.APPLICATION_JSON)
-			.content(jsonMapper.writeValueAsString(rq))
-		)
-		.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
-	    .andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
-	    .andReturn().getResponse();
+				put(URL + "/updateBpi") // url
+				.contentType(MediaType.APPLICATION_JSON) // 資料的格式
+				.accept(MediaType.APPLICATION_JSON)
+				.content(jsonMapper.writeValueAsString(rq))
+			)
+			.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
+			.andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
+			.andReturn().getResponse();
 		mockRes.setCharacterEncoding(CHARACTER_ENCODING); // 解决打印中文亂碼問題
 		String response = mockRes.getContentAsString(); // 將相應的資料轉換為字串
 		log.info("response : {}", response);
@@ -242,14 +243,14 @@ class BpiTest {
 		BpiRq rq = new BpiRq();
 		rq.setCode("TWD");
 		MockHttpServletResponse mockRes = this.mockMvc.perform(
-			delete(URL + "/deleteBpi/code") // url
-			.contentType(MediaType.APPLICATION_JSON) // 資料的格式
-			.accept(MediaType.APPLICATION_JSON)
-			.content(jsonMapper.writeValueAsString(rq))
-		)
-		.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
-	    .andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
-	    .andReturn().getResponse();
+				delete(URL + "/deleteBpi/code") // url
+				.contentType(MediaType.APPLICATION_JSON) // 資料的格式
+				.accept(MediaType.APPLICATION_JSON)
+				.content(jsonMapper.writeValueAsString(rq))
+			)
+			.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
+			.andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
+			.andReturn().getResponse();
 		mockRes.setCharacterEncoding(CHARACTER_ENCODING); // 解决打印中文亂碼問題
 		String response = mockRes.getContentAsString(); // 將相應的資料轉換為字串
 		log.info("response : {}", response);
@@ -264,13 +265,13 @@ class BpiTest {
 	@Test
 	void callCoindeskTest() throws Exception {
 		MockHttpServletResponse mockRes = this.mockMvc.perform(
-			get(URL + "/call/coindesk") // url
-			.contentType(MediaType.APPLICATION_JSON) // 資料的格式
-			.accept(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
-        .andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
-        .andReturn().getResponse(); 
+				get(URL + "/call/coindesk") // url
+				.contentType(MediaType.APPLICATION_JSON) // 資料的格式
+				.accept(MediaType.APPLICATION_JSON)
+			)
+			.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
+			.andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
+			.andReturn().getResponse();
 		mockRes.setCharacterEncoding(CHARACTER_ENCODING); // 解决打印中文亂碼問題
 		String response = mockRes.getContentAsString(); // 將相應的資料轉換為字串
 		log.info("response : {}", response);
@@ -285,13 +286,13 @@ class BpiTest {
 	@Test
 	void callTransFormTest() throws Exception {
 		MockHttpServletResponse mockRes = this.mockMvc.perform(
-			get(URL + "/call/coindesk/transform") // url
-			.contentType(MediaType.APPLICATION_JSON) // 資料的格式
-			.accept(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
-	    .andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
-	    .andReturn().getResponse(); 
+				get(URL + "/call/coindesk/transform") // url
+				.contentType(MediaType.APPLICATION_JSON) // 資料的格式
+				.accept(MediaType.APPLICATION_JSON)
+			)
+			.andExpect(MockMvcResultMatchers.status().isOk()) // 期待狀態OK
+			.andDo(MockMvcResultHandlers.print()) // 打印出請求和相應的內容
+			.andReturn().getResponse();
 		mockRes.setCharacterEncoding(CHARACTER_ENCODING); // 解决打印中文亂碼問題
 		String response = mockRes.getContentAsString(); // 將相應的資料轉換為字串
 		log.info("response : {}", response);
