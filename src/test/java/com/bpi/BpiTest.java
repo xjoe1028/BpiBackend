@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -62,7 +63,7 @@ class BpiTest {
 	public static List<String> codesName = Arrays.asList("美元", "英镑", "歐元", "人民幣", "日元", "韓元");
 	public static List<String> symbols = Arrays.asList("$", "£", "€", "¥", "¥", "₩");
 	public static List<String> descriptions = Arrays.asList("United States Dollar", "British Pound Sterling", "Euro", "Chinese yuan", "Japanese Yen", "Korea Hwan");
-	public static List<Double> ratesFloat = Arrays.asList(27.85, 37.85, 31.49, 4.39, 0.24, 0.023);
+	public static List<BigDecimal> ratesFloat = Arrays.asList(BigDecimal.valueOf(27.85), BigDecimal.valueOf(37.85), BigDecimal.valueOf(31.49), BigDecimal.valueOf(4.39), BigDecimal.valueOf(0.24), BigDecimal.valueOf(0.023));
 	public static List<String> createdDates = Arrays.asList(TODAY, TODAY, TODAY, TODAY, TODAY, TODAY);
 	
 	/**
@@ -70,7 +71,7 @@ class BpiTest {
 	 * init data不須有更新日期
 	 * 
 	 */
-	@Disabled("skip")
+	// @Disabled("skip")
 	@Test
 	void beforeInit() throws Exception {
 		for (int i = 0; i < codes.size(); i++) {
@@ -107,7 +108,7 @@ class BpiTest {
 	@Disabled("skip")
 	@Test
 	void findAllBpisTest() throws Exception {
-		MockHttpServletResponse mockRes = this.mockMvc.perform(
+		MockHttpServletResponse mockRes = mockMvc.perform(
 				get(URL + "/findAllBpis")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.accept(MediaType.APPLICATION_JSON_VALUE)
@@ -128,7 +129,7 @@ class BpiTest {
 	@Disabled("skip")
 	@Test
 	void findBpiByCodeTest() throws Exception {
-		MockHttpServletResponse mockRes = this.mockMvc.perform(
+		MockHttpServletResponse mockRes = mockMvc.perform(
 				get(URL + "/findBpi/code") // url
 				.contentType(MediaType.APPLICATION_JSON) // 資料的格式
 				.accept(MediaType.APPLICATION_JSON)
@@ -150,7 +151,7 @@ class BpiTest {
 	@Disabled("skip")
 	@Test
 	void findBipByCodeChineseNameTest() throws Exception {
-		MockHttpServletResponse mockRes = this.mockMvc.perform(
+		MockHttpServletResponse mockRes = mockMvc.perform(
 				get(URL + "/findBpi/codeChineseName") // url
 				.contentType(MediaType.APPLICATION_JSON) // 資料的格式
 				.accept(MediaType.APPLICATION_JSON)
@@ -177,10 +178,10 @@ class BpiTest {
 			.symbol("$")
 			.codeChineseName("新台幣")
 			.description("New Taiwan Dollar")
-			.rateFloat(100.2)
+			.rateFloat(new BigDecimal(100.2))
 			.build();
 		
-		MockHttpServletResponse mockRes = this.mockMvc.perform(
+		MockHttpServletResponse mockRes = mockMvc.perform(
 				post(URL + "/addBpi") // url
 				.contentType(MediaType.APPLICATION_JSON) // 資料的格式
 				.accept(MediaType.APPLICATION_JSON)
@@ -205,7 +206,7 @@ class BpiTest {
 		List<BpiEntity> bpis = bpiRepository.findAll();
 		BpiEntity bpi = bpis.get(0);
 		bpi.setDescription("update jpa save");
-		bpi.setRateFloat(1234.123);
+		bpi.setRateFloat(new BigDecimal(1234.123));
 		
 		BpiRq rq = BpiRq.builder()
 			.code(bpi.getCode())
@@ -218,7 +219,7 @@ class BpiTest {
 		// 前端在update 會送 舊幣別 讓後端知道是否新增還是更新
 		rq.setOldCode(bpi.getCode()); 
 		
-		MockHttpServletResponse mockRes = this.mockMvc.perform(
+		MockHttpServletResponse mockRes = mockMvc.perform(
 				put(URL + "/updateBpi") // url
 				.contentType(MediaType.APPLICATION_JSON) // 資料的格式
 				.accept(MediaType.APPLICATION_JSON)
@@ -242,7 +243,7 @@ class BpiTest {
 	void deleteBpiByCodeTest() throws Exception {
 		BpiRq rq = new BpiRq();
 		rq.setCode("TWD");
-		MockHttpServletResponse mockRes = this.mockMvc.perform(
+		MockHttpServletResponse mockRes = mockMvc.perform(
 				delete(URL + "/deleteBpi/code") // url
 				.contentType(MediaType.APPLICATION_JSON) // 資料的格式
 				.accept(MediaType.APPLICATION_JSON)
@@ -264,7 +265,7 @@ class BpiTest {
 	@Disabled("skip")
 	@Test
 	void callCoindeskTest() throws Exception {
-		MockHttpServletResponse mockRes = this.mockMvc.perform(
+		MockHttpServletResponse mockRes = mockMvc.perform(
 				get(URL + "/call/coindesk") // url
 				.contentType(MediaType.APPLICATION_JSON) // 資料的格式
 				.accept(MediaType.APPLICATION_JSON)
@@ -285,7 +286,7 @@ class BpiTest {
 	@Disabled("skip")
 	@Test
 	void callTransFormTest() throws Exception {
-		MockHttpServletResponse mockRes = this.mockMvc.perform(
+		MockHttpServletResponse mockRes = mockMvc.perform(
 				get(URL + "/call/coindesk/transform") // url
 				.contentType(MediaType.APPLICATION_JSON) // 資料的格式
 				.accept(MediaType.APPLICATION_JSON)

@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NewBpiRs {
 
-	private String updated;
+	String updated;
 
-	private Map<String, NewBpi> bpisData;
+	Map<String, NewBpi> bpisData;
 
 }

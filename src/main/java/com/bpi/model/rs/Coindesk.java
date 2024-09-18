@@ -10,12 +10,12 @@ import lombok.Data;
 @Data
 public class Coindesk {
 	
-	private Time time;
-	
-	private String disclaimer;
-	
-	private String chartName;
-	
-	private Map<String, CoindeskBpiDTO> bpi;
+	Time time;
+
+	String disclaimer;
+
+	String chartName;
+
+	Map<String, CoindeskBpiDTO> bpi;
 	
 }

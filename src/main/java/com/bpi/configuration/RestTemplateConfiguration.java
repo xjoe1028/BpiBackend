@@ -19,11 +19,11 @@ import org.springframework.web.client.RestTemplate;
 public class RestTemplateConfiguration {
 
 	@Bean
-	public RestTemplate restTesmplate(ClientHttpRequestFactory factory) {
-		RestTemplate restTesmplate = new RestTemplate(factory);
+	public RestTemplate restTemplate(ClientHttpRequestFactory factory) {
+		RestTemplate restTemplate = new RestTemplate(factory);
 		// 支持中文編碼
-		restTesmplate.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
-		return restTesmplate;
+		restTemplate.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
+		return restTemplate;
 	}
 	
 	@Bean

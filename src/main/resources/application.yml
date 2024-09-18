@@ -37,6 +37,11 @@ spring:
     default-property-inclusion: non-null # JSON處理時忽略非空字段
     serialization:
       fail-on-empty-beans: false
+springdoc:
+  api-docs: "/api-docs"
+  swagger-ui:
+    path: "/swagger-ui.html"
+    display-request-duration: true
 
 # slf4j      
 logging:

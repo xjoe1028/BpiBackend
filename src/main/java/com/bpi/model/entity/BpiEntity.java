@@ -1,6 +1,7 @@
 package com.bpi.model.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -72,7 +73,7 @@ public class BpiEntity implements Serializable {
 	@Schema(description = "匯率")
 	@Basic
 	@Column
-	private Double rateFloat;
+	private BigDecimal rateFloat;
 	
 	/**
 	 * 描述

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -13,18 +15,18 @@ import lombok.NoArgsConstructor;
 public class CoindeskBpiDTO {
 
 	@Schema(description = "貨幣名稱")
-	public String code;
+	String code;
 	
 	@Schema(description = "金錢符號")
-	private String symbol;
+	String symbol;
 
 	@Schema(description = "描述")
-	private String description;
+	String description;
 	
 	@Schema(description = "匯率(千分位格式)")
-	private String rate;
+	String rate;
 	
 	@Schema(description = "匯率")
-	private Double rateFloat;
+	BigDecimal rateFloat;
 
 }
