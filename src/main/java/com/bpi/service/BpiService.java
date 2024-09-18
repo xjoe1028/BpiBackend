@@ -113,19 +113,19 @@ public class BpiService {
 		Optional<BpiEntity> oldBpi = bpiRepository.findById(rq.getOldCode());
 		BpiEntity entity = bpiAssembler.toEntity(rq);
 		entity.setRate(NumberUtil.fmtMicrometer(String.valueOf(rq.getRateFloat()))); // 千分位格式化
-		
+
 		if (!oldBpi.isPresent()) {
 			log.info("原幣別資料不存在，直接做新增");
 			entity.setCreated(DateUtil.getNowDate());
+			entity = bpiRepository.save(entity);
 		} else {
 			log.info("原幣別資料已存在，直接做修改");
 			entity.setUpdated(DateUtil.getNowDate());
 			entity.setCreated(oldBpi.get().getCreated());
+			bpiRepository.updateBpi(entity, rq.getOldCode());
 		}
-		
-		// JPA save
-		return BpiRsUtil.getSuccess(bpiAssembler.entityToRs(bpiRepository.save(entity)));
-		
+
+		return BpiRsUtil.getSuccess(bpiAssembler.entityToRs(entity));
 	}
 	
 	/**
