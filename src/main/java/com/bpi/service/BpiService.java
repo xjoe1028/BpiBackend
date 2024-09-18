@@ -45,8 +45,6 @@ public class BpiService {
 	
 	/**
 	 * select all
-	 * 
-	 * @return
 	 */
 	public ApiResponse<List<BpiRs>> findAll() {
 		List<BpiEntity> bpiList = bpiRepository.findAll();
@@ -59,9 +57,6 @@ public class BpiService {
 
 	/**
 	 * select by code(pk)
-	 * 
-	 * @param code
-	 * @return
 	 */
 	public ApiResponse<BpiRs> findBpiByPk(String code) {
 		Optional<BpiEntity> bpi = bpiRepository.findById(code);
@@ -74,9 +69,6 @@ public class BpiService {
 	
 	/**
 	 * select by codeChineseName
-	 * 
-	 * @param codeChineseName
-	 * @return
 	 */
 	public ApiResponse<BpiRs> findBpiByCodeChineseName(String codeChineseName) {
 		Optional<BpiEntity> bpi = bpiRepository.findByCodeChineseName(codeChineseName);
@@ -89,10 +81,6 @@ public class BpiService {
 	
 	/**
 	 * 查詢 where code = ? and codeChineseName = ?
-	 * 
-	 * @param code
-	 * @param codeChineseName
-	 * @return
 	 */
 	public ApiResponse<BpiRs> findBpiByCodeAndCodeChineseName(String code, String codeChineseName) {
 		Optional<BpiEntity> bpi = bpiRepository.findByCodeAndCodeChineseName(code, codeChineseName);
@@ -105,9 +93,6 @@ public class BpiService {
 
 	/**
 	 * 新增
-	 * 
-	 * @param bpi
-	 * @return
 	 */
 	public ApiResponse<BpiRs> addBpi(BpiRq rq) {
 		Optional<BpiEntity> bpi = bpiRepository.findById(rq.getCode());
@@ -123,9 +108,6 @@ public class BpiService {
 
 	/**
 	 * 修改
-	 * 
-	 * @param bpi
-	 * @return
 	 */
 	public ApiResponse<BpiRs> updateBpi(BpiRq rq) {
 		Optional<BpiEntity> oldBpi = bpiRepository.findById(rq.getOldCode());
@@ -148,8 +130,6 @@ public class BpiService {
 	
 	/**
 	 * Delete entity
-	 * 
-	 * @param entity
 	 */
 	public ApiResponse<BpiRs> deleteBpi(String code) {
 		Optional<BpiEntity> bpi = bpiRepository.findById(code);
@@ -175,7 +155,8 @@ public class BpiService {
 		log.info("coindesk: {}", coindesk);
 
 		List<BpiEntity> allBpis = Optional.of(bpiRepository.findAll()).orElseGet(ArrayList::new);
-		
+
+		assert coindesk != null;
 		Map<String, NewBpi> bpisMap = coindesk.getBpi().values().stream()
 			.map(b -> transformNewBpi(allBpis, b))
 			.collect(Collectors.toMap(NewBpi::getCode, Function.identity(), (v1, v2) -> v2));

@@ -48,24 +48,12 @@ public class BpiController {
 
 	final RestTemplate restTemplate;
 
-	/**
-	 * select All
-	 * 
-	 * @param bpi
-	 * @return
-	 */
 	@Operation(summary = "查詢所有幣別")
 	@GetMapping("/findAllBpis")
 	public ApiResponse<List<BpiRs>> findAllBpis() {
 		return bpiService.findAll();
 	}
 
-	/**
-	 * 查詢 Bpi by code
-	 * 
-	 * @param code
-	 * @return
-	 */
 	@Operation(summary = "查詢單一幣別")
 	@GetMapping("/findBpi/code")
 	public ApiResponse<BpiRs> findBpiByPk(
@@ -74,12 +62,6 @@ public class BpiController {
 		return bpiService.findBpiByPk(code);
 	}
 
-	/**
-	 * 查詢 Bpi by codeChineseName
-	 * 
-	 * @param code
-	 * @return
-	 */
 	@Operation(summary = "查詢單一幣別")
 	@GetMapping("/findBpi/codeChineseName")
 	public ApiResponse<BpiRs> findBpiByCodeChineseName(
@@ -88,12 +70,6 @@ public class BpiController {
 		return bpiService.findBpiByCodeChineseName(codeChineseName);
 	}
 
-	/**
-	 * 新增 Bpi
-	 * 
-	 * @param bpi
-	 * @return
-	 */
 	@Operation(summary = "新增幣別")
 	@RqType(BpiRq.class)
 	@PostMapping("/addBpi")
@@ -101,14 +77,6 @@ public class BpiController {
 		return bpiService.addBpi(rq);
 	}
 
-	/**
-	 * 修改 Bpi
-	 * 
-	 * PUT: 替換資源
-	 * 
-	 * @param bpi
-	 * @return
-	 */
 	@Operation(summary = "修改幣別")
 	@RqType(BpiRq.class)
 	@PutMapping("/updateBpi")
@@ -116,12 +84,6 @@ public class BpiController {
 		return bpiService.updateBpi(rq);
 	}
 
-	/**
-	 * 刪除 Bpi by code
-	 * 
-	 * @param id
-	 * @return
-	 */
 	@Operation(summary = "刪除幣別")
 	@RqType(BpiRq.class)
 	@DeleteMapping("/deleteBpi/code")
@@ -129,11 +91,6 @@ public class BpiController {
 		return bpiService.deleteBpi(rq.getCode());
 	}
 
-	/**
-	 * 呼叫 coindesk API
-	 * 
-	 * @return
-	 */
 	@Operation(summary = "呼叫外部coindesk API")
 	@GetMapping("/call/coindesk")
 	public ApiResponse<Coindesk> callCoindeskAPI() {
@@ -142,14 +99,6 @@ public class BpiController {
 		return BpiRsUtil.getSuccess(coindesk);
 	}
 
-	/**
-	 * 呼叫 coindesk API 在 format成自定義的資料 return
-	 * 
-	 * @return
-	 * @throws ParseException
-	 * @throws JsonProcessingException
-	 * @throws Exception
-	 */
 	@Operation(summary = "呼叫外部coindesk API 後進行資料處理 return")
 	@GetMapping("/call/coindesk/transform")
 	public ApiResponse<NewBpiRs> transformNewBpi() {
