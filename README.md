@@ -1,7 +1,7 @@
 # BpiBackend sql
 Create sql：
 
-create table bpi (bpi_id bigint not null, code varchar(255), code_chinese_name varchar(255), description varchar(255), rate varchar(255), rate_float double, symbol varchar(255), updated varchar(255), primary key (bpi_id))
+create table bpi (code varchar(255) not null, code_chinese_name varchar(255) not null, created varchar(255) not null, description varchar(255), rate varchar(255), rate_float decimal(19,2), symbol varchar(255), updated varchar(255), primary key (code));
 
 Insert sql：
 
